@@ -1,0 +1,97 @@
+@charset "utf-8";
+body {
+  background-color:cadetblue;
+}
+
+header {
+ display: block; 
+ height: 100px; 
+ width: inherit;
+ background-color: rgb(30, 217, 86);
+}
+
+#myboot {
+    position: relative; 
+    bottom: 500px; 
+    left:0px; 
+    line-height: 5px;
+    width: 100%;
+    height: 100px;
+    border: 3px solid #73AD21;
+    background-color: darkcyan;
+}
+
+#leftblock {
+    position: relative; 
+    bottom: -50px; 
+    left:10px; 
+    line-height: 5px;
+    width: 200px;
+    height: 400px;
+    border: 3px solid #73AD21;
+    background-color: darkcyan;
+}
+
+#leftblock > #Catalog
+{
+   position: relative; 
+    bottom: -50px; 
+    left:10px;
+}
+#leftblock > #BuyAndPost
+{
+   position: relative; 
+    bottom: -100px; 
+    left:10px;  
+}
+#leftblock > #Contacts
+{
+   position: relative; 
+    bottom: -150px; 
+    left: 10px;  
+}
+
+#centralblock
+{
+    position: relative; 
+    bottom: 360px; 
+    left:300px; 
+    line-height: 5px;
+    width: 600px;
+    height: 600px;
+    border: 3px solid #73AD21;
+    background-color: darkcyan;   
+}
+
+#rightblock
+{
+    position: relative; 
+    bottom: 970px; 
+    left:950px; 
+    line-height: 5px;
+    width: 200px;
+    height: 150px;
+    border: 3px solid #73AD21;
+    background-color: darkcyan;   
+}
+
+
+.bigText {
+    font-family: Georgia, Times New Roman, Times;
+    color: white;
+    font-size: 160%;
+}
+
+#myhead > header > h1
+{
+    position: relative; 
+    bottom: -25px; 
+    left:100px;
+}
+
+.smallText{
+    font-family: Georgia, Times New Roman, Times;
+    color: white;
+    font-size: 100%;
+    font-size: larger;
+}

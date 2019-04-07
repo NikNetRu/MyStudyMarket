@@ -26,10 +26,9 @@ class MSQLwork {
         $this->dbTable = $dbTable;
         $this->host = $host;
     }
-    
-    
-    // Функция реализует соединение с сервером и работы с ним, так же получает данные столбов $this->Columns с которыми предстоит работать
-    public function Connect () {
+
+       // Функция реализует соединение с сервером и работы с ним, так же получает данные столбов $this->Columns с которыми предстоит работать
+    public function Instance () {
       $link =  mysqli_connect($this->host, $this->dbLogin, $this->dbPass, $this->db);
       mysqli_set_charset($link, 'utf-8');
       $query = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '$this->dbTable' AND TABLE_SCHEMA = '$this->db'";
@@ -41,11 +40,36 @@ class MSQLwork {
             $arrayColumns [] = $value1;
           }
      $this->Columns = $arrayColumns;
+     mysqli_close($link);
     }
+    
+    
+    //функция принимает аргументы и добавляет их в таблицу.
+    //Важна последовательность аргументов! Добавляются согласно последовательно указанной в таблице(и $this->Columns)
+    //Данные передаются в функцию (пока)виде массива
+   // в процессе: проверка на соотвествия числа столбцов, проверка ввёденных данных на предмет опасности (общей для всех отд. функицей?)
+    public function AddRow(array $array)
+    {  $arrayStringDataSave = implode("','" ,$array);
+       if (property_exists($this, 'Columns'))
+       {  $link =  mysqli_connect($this->host, $this->dbLogin, $this->dbPass, $this->db);
+          mysqli_set_charset($link, 'utf-8');
+          $query = "INSERT INTO $this->dbTable  VALUES ('$arrayStringDataSave')";
+          $result = mysqli_query($link, $query);
+          mysqli_close($link);
+          if ($result){return 'Успешно';} else {return 'Не удалось добавить пользователя';}
+       }
+       else {echo 'Не установилено соединение используйте сначала  Instance ()';
+            die();
+            }
+    }
+    
     
     
 }
 
 $obj = new MSQLwork($db,$dbLogin,$dbPass, $dbTableUsers,$host);
-$obj->Connect();
-print_r ($obj);
+$obj->Instance();
+$res = $obj->AddRow(array ('','email','password','2019-04-07 00:00:00', '1000'));
+echo $res;
+//print_r ($obj);
+

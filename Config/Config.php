@@ -46,12 +46,17 @@ class MSQLwork {
     
     //функция принимает аргументы и добавляет их в таблицу.
     //Важна последовательность аргументов! Добавляются согласно последовательно указанной в таблице(и $this->Columns)
-    //Данные передаются в функцию (пока)виде массива
-   // в процессе: проверка на соотвествия числа столбцов, проверка ввёденных данных на предмет опасности (общей для всех отд. функицей?)
+    //Данные передаются в функцию (пока)виде массива / НЕт проверки на ввод запрещённых символов, так как мы не предполагаем какой формат входных данных должен быть
     public function AddRow(array $array)
-    {  $arrayStringDataSave = implode("','" ,$array);
+    {   $arrayStringDataChek = implode(" " ,$array);
+        $arrayStringDataSave = implode("','" ,$array);
        if (property_exists($this, 'Columns'))
-       {  $link =  mysqli_connect($this->host, $this->dbLogin, $this->dbPass, $this->db);
+       {   if (count($array)!= count($this->Columns))
+           {echo 'число столбцов таблицы, неравно числу введённых данных'; 
+           die();
+           }
+           
+          $link =  mysqli_connect($this->host, $this->dbLogin, $this->dbPass, $this->db);
           mysqli_set_charset($link, 'utf-8');
           $query = "INSERT INTO $this->dbTable  VALUES ('$arrayStringDataSave')";
           $result = mysqli_query($link, $query);
@@ -59,17 +64,14 @@ class MSQLwork {
           if ($result){return 'Успешно';} else {return 'Не удалось добавить пользователя';}
        }
        else {echo 'Не установилено соединение используйте сначала  Instance ()';
-            die();
-            }
+            die();}
     }
-    
-    
     
 }
 
 $obj = new MSQLwork($db,$dbLogin,$dbPass, $dbTableUsers,$host);
 $obj->Instance();
-$res = $obj->AddRow(array ('','email','password','2019-04-07 00:00:00', '1000'));
+$res = $obj->AddRow(array ('','1111','2019-04-07 00:00:00', '1000'));
 echo $res;
 //print_r ($obj);
 

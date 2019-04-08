@@ -1,0 +1,6 @@
+<?php
+
+function ChekGetData ($data)
+{
+}
+

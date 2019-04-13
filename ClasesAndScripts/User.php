@@ -58,15 +58,51 @@ class User {
      */
         public function GetUser ($ID){
         $link = new MSQLwork();
-        $link->Instance(); 
-        $link ->FindThis("$ID", "ID");
+        $link->Instance($this->dbUsers); 
+        $result = $link ->FindThis(array ("$ID"), array ("ID"));
+        foreach ($result as $key => $value) {
+            foreach ($value as $key => $value) {
+                $dataUser[] = $value;
+            }
         }
-    
-    
+        $this->ID = $dataUser[0];
+        $this->email = $dataUser[1];
+        $this->password = $dataUser[2];
+        $this->registrDate = $dataUser[3];
+        $this->cash = $dataUser[4];
+        }
+       
+        /* 
+         * Проверяет существует ли пользователь по мэйлу и паролю
+         */
+        public function CheckUserExist ($email,$password){
+        if (CheсkDataEmail($email) or CheсkData($password)){
+            return "Incorrect email or password";
+            die();
+        }
+        $link = new MSQLwork();
+        $link->Instance($this->dbUsers);
+        $result = $link->FindThis(array("$email","$password"), array("email","password"));
+        if (mysqli_num_rows($result) != 0){
+            return "Finded";
+        }
+            return "Not found";
+        }
 }
 
+        
 
-$user = new User();
-$user -> CreateUser("", "NIkdwa@list.ru", "mypass", 100);
-print_r($user);
-$user ->PushToDatabase();
+
+
+
+ 
+//$user = new User();
+//$user -> CreateUser("", "NIkdwa@list.ru", "mypass", 100);
+//print_r($user);
+//$user ->PushToDatabase();
+
+//$user->GetUser(1);
+//print_r($user);
+
+//$data = $user->CheckUserExist ("NIkdwa@list.ru","mypass");
+//echo $data;

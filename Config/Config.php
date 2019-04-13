@@ -19,16 +19,19 @@ $dbTableProducts = "products"; //таблица каталога продукт�
 
 
 class MSQLwork {
-    public function __construct($db,$dbLogin,$dbPass, $dbTable, $host) {
-        $this->db = $db;
-        $this->dbLogin = $dbLogin;
-        $this->dbPass = $dbPass;
-        $this->dbTable = $dbTable;
-        $this->host = $host;
+    
+        public function __construct() {
+        $this->db = "mystudymarket";
+        $this->dbLogin = "root";
+        $this->dbPass = "";
+        $this->dbTable = "";
+        $this->host = "127.0.0.1";
     }
+   
 
        // Функция реализует соединение с сервером и работы с ним, так же получает данные столбов $this->Columns с которыми предстоит работать
-    public function Instance () {
+    public function Instance ($dbTable) {
+       $this->dbTable =  $dbTable;
       $link =  mysqli_connect($this->host, $this->dbLogin, $this->dbPass, $this->db);
       mysqli_set_charset($link, 'utf-8');
       $query = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '$this->dbTable' AND TABLE_SCHEMA = '$this->db'";
@@ -67,11 +70,29 @@ class MSQLwork {
             die();}
     }
     
+    
+    /*
+     * Функция осуществляет поиск $searchThis в таблице в выбранном столбце $column
+     * Возвращается  элемент таблицы MYSQL при наличии,пустой обьект при отсутсвии
+     */
+    
+    public function FindThis (array $searchThis, array $column){
+         $link =  mysqli_connect($this->host, $this->dbLogin, $this->dbPass, $this->db);
+          mysqli_set_charset($link, 'utf-8');
+          $query = "SELECT * FROM $this->dbTable WHERE";
+          if (count($searchThis) != count($column)){
+              echo 'неверно указаны параметры';              
+              die();
+          }
+          $counter = count($searchThis)-1;
+          while ($counter >= 0){
+              $query .= " `$column[$counter]` = '$searchThis[$counter]' AND";
+              --$counter;
+          }
+          $query = mb_strimwidth($query, 0, -3);
+          $query .=" LIMIT 1";
+          $result = mysqli_query($link, $query);
+          mysqli_close($link);
+          return $result;
+    }
 }
-
-$obj = new MSQLwork($db,$dbLogin,$dbPass, $dbTableUsers,$host);
-$obj->Instance();
-$res = $obj->AddRow(array ('','1111','2019-04-07 00:00:00', '1000'));
-echo $res;
-//print_r ($obj);
-

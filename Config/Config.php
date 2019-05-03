@@ -95,4 +95,36 @@ class MSQLwork {
           mysqli_close($link);
           return $result;
     }
+    /*
+     * Функция сверяет расширение файла с $type
+     */
+    
+    public function CheckTypeFile ($file, array $type) {
+        if($file['name'] == '') {
+        return 'Вы не выбрали файл.';}
+	if($file['size'] == 0) {
+        return 'Файл слишком большой.'; }
+	$getMime = explode('.', $file['name']); 
+	$mime = strtolower(end($getMime));
+	if(in_array($mime, $type)) {
+        return true;}
+	return false;
+    }
+    
+    
+    /*
+     * Функция загружает выбранный файл по указанному адресу
+     * формируя уникальное имя и возвращая его путь
+     */
+     public function UploadFile($file, $src){
+	$name = mt_rand(0, 10000) . $file['name'];
+        $scanSrc = scandir($src); //на всякий случай проверим есть ли такой файл
+        $distinction = in_array($name, $scanSrc);
+        if ($distinction) {
+            echo "файл уже существует"; 
+            die();
+        }
+	copy($file, $src.'/'.$name);
+        return $src.'/'.$name;
+  }
 }

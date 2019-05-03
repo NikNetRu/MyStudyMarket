@@ -44,6 +44,11 @@ class Products {
             echo 'Уже существует';
             die();
         }
+        $chekType = CheckTypeFile ($this->srcjpeg, array ('jpeg','jpg'));
+        if (!$chekType == True) {die();}
+        
+        $nameUploadedFile = UploadFile($this->srcjpeg, 'UserPictures');
+        $this->srcjpeg = $nameUploadedFile;
         $link -> AddRow(array ("$this->ID","$this->name", "$this->properties", "$this->srcjpeg", "$this->cost"));
         echo 'Успешно добавлен';
         }

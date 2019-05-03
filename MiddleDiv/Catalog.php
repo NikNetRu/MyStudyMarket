@@ -19,7 +19,7 @@
                 <label>Наименование</label> <input id = "name"> <br>
                 <label>Описание</label> <textarea id = "properties"></textarea> <br>
                 <label>Цена</label> <input id = "cost"> <br>
-                <label>Загрузить изображение</label> <input id = "LoadImg" type="file"> <br>
+                <label>Загрузить изображение</label> <input id = "loadImg" type="file"> <br>
                 <button type = "button" onclick="loadProduct()">Отправить</button> <br>
             </form>
         </div>

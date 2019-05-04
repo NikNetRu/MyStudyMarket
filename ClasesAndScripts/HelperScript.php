@@ -42,10 +42,10 @@ function CheсkDataEmail ($data){
     
     /*
      * Функция загружает выбранный файл по указанному адресу
-     * формируя уникальное имя и возвращая его путь
+     * формируя уникальное имя и возвращая его имя
      */
-   function UploadFile($file, $src){
-	$name = mt_rand(0, 10000) . $_FILES[$file]['name'];
+   function UploadFile($nameFormUpload, $src){
+	$name = mt_rand(0, 10000) . $_FILES[$nameFormUpload]['name'];
         $scanSrc = scandir($src); //на всякий случай проверим есть ли такой файл
         $distinction = in_array($name, $scanSrc);
         if ($distinction) {
@@ -53,7 +53,7 @@ function CheсkDataEmail ($data){
             die();
         }
         $destination = $src.'\\'.$name;
-        $tmp_name = $_FILES[$file]['tmp_name'];
+        $tmp_name = $_FILES[$nameFormUpload]['tmp_name'];
 	move_uploaded_file($tmp_name, $destination);
-        return $destination;
+        return $name;
   }

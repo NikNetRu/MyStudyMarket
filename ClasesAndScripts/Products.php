@@ -44,10 +44,10 @@ class Products {
             echo 'Уже существует';
             die();
         }
-        $chekType = CheckTypeFile ($nameFormUpload, array ('jpeg','jpg'));
+        $chekType = CheckTypeFile ($nameFormUpload, array ('jpeg','jpg','gif'));
         if (!$chekType == True) {die();}
         
-        $nameUploadedFile = UploadFile($nameFormUpload, "C:\\xampp\htdocs\MyStudyMarket\UserPictures\\"); 
+        $nameUploadedFile = UploadFile($nameFormUpload, "C:\\xampp\htdocs\MyStudyMarket\UserPictures"); 
         $this->srcjpeg = $nameUploadedFile;
         $link -> AddRow(array ("$this->ID","$this->name", "$this->properties", "$this->srcjpeg", "$this->cost"));
         echo 'Успешно добавлен';

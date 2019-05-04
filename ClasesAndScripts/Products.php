@@ -36,7 +36,7 @@ class Products {
      * отправляет данные продукта в БД указанную в Config.php как БД пользователя
      * 
      */
-        public function PushToDatabase (){
+        public function PushToDatabase ($nameFormUpload){
         $link = new MSQLwork();
         $link->Instance($this->dbProducts);
         $exist = $link->FindThis(array ($this->ID),array ("ID"));
@@ -44,10 +44,10 @@ class Products {
             echo 'Уже существует';
             die();
         }
-        $chekType = CheckTypeFile ($this->srcjpeg, array ('jpeg','jpg'));
+        $chekType = CheckTypeFile ($nameFormUpload, array ('jpeg','jpg'));
         if (!$chekType == True) {die();}
         
-        $nameUploadedFile = UploadFile($this->srcjpeg, 'UserPictures');
+        $nameUploadedFile = UploadFile($nameFormUpload, "C:\\xampp\htdocs\MyStudyMarket\UserPictures\\"); 
         $this->srcjpeg = $nameUploadedFile;
         $link -> AddRow(array ("$this->ID","$this->name", "$this->properties", "$this->srcjpeg", "$this->cost"));
         echo 'Успешно добавлен';

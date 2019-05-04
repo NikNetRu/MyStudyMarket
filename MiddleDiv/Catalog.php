@@ -15,16 +15,15 @@
         
         
         <div id ="AddTable" hidden="">
-            <form>
-                <label>Наименование</label> <input id = "name"> <br>
-                <label>Описание</label> <textarea id = "properties"></textarea> <br>
-                <label>Цена</label> <input id = "cost"> <br>
-                <label>Загрузить изображение</label> <input id = "loadImg" type="file"> <br>
-                <button type = "button" onclick="loadProduct()">Отправить</button> <br>
+            <form enctype="multipart/form-data" method="POST" action="MiddleDiv/loadProduct.php">
+                <label>Наименование</label> <input id = "name" name = "name"> <br>
+                <label>Описание</label> <textarea id = "properties" name = "properties"></textarea> <br>
+                <label>Цена</label> <input id = "cost" name = "cost"> <br>
+                <label>Загрузить изображение</label> <input id = "loadImg" name = "loadImg" type="file"> <br>
+                <button type = "submit">Отправить</button> <br>
             </form>
         </div>
         <?php
-        
         ?>
     </body>
 </html>

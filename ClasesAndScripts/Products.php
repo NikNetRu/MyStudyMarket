@@ -55,6 +55,7 @@ class Products {
         
         public function GetProduct ($ID){
         $link = new MSQLwork();
+        $dataUser =[];
         $link->Instance($this->dbProducts); 
         $result = $link ->FindThis(array ("$ID"), array ("ID"));
         foreach ($result as $key => $value) {
@@ -68,4 +69,27 @@ class Products {
         $this->srcjpeg = $dataUser[3];
         $this->cost = $dataUser[4];
         }
+        
+        public function ExtractTableProducts (){
+        $link = new MSQLwork();
+        $dataUser =[];
+        $link->Instance("products"); 
+        $result = $link ->getAllElements();
+        //$result = mysqli_fetch_assoc($result);
+        $count = 0;
+        foreach ($result as $array)
+        { $count++;
+        foreach ($array as $key =>$value)
+        { 
+            $elements[$count][] = array($key => $value);
+            echo $key.'=>'.$value.'</br>';
+        }
+        }
+        return $elements;
+        }
+        
+        
+        
+        
 }
+        

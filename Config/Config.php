@@ -95,5 +95,24 @@ class MSQLwork {
           mysqli_close($link);
           return $result;
     }
+    //возвращает число строк из БД
+    function SizeDB () {
+       $link =  mysqli_connect($this->host, $this->dbLogin, $this->dbPass, $this->db);
+       mysqli_set_charset($link, 'utf-8');
+       $query = "SELECT COUNT(*) FROM $this->dbTable";
+       $result = mysqli_query($link, $query);
+       $result = mysqli_num_rows($result);
+       mysqli_close($link);
+       return $result;
+   }
     
+   
+    function getAllElements (){
+          $link =  mysqli_connect($this->host, $this->dbLogin, $this->dbPass, $this->db);
+          mysqli_set_charset($link, 'utf-8');
+          $query = "SELECT * FROM $this->dbTable";
+          $result = mysqli_query($link, $query);
+          mysqli_close($link);
+          return $result;
+    }
 }
